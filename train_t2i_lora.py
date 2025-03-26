@@ -7,11 +7,10 @@
 import argparse
 import logging
 import math
-import os 
+import os
 import random
-import shutil
-from contextlib import nullcontext
 from pathlib import Path
+from typing import Optional
 
 import datasets
 import numpy as np
@@ -23,29 +22,18 @@ from accelerate import Accelerator
 from accelerate.logging import get_logger
 from accelerate.utils import ProjectConfiguration, set_seed
 from datasets import load_dataset
-from huggingface_hub import create_repo, upload_folder
-from packaging import version
-from peft import LoraConfig # for LoRA
-from peft.utils import get_peft_model_state_dict
+from huggingface_hub import HfFolder, Repository, create_repo, whoami
 from torchvision import transforms
 from tqdm.auto import tqdm
 from transformers import CLIPTextModel, CLIPTokenizer
 
 import diffusers
-from diffusers import AutoencoderKL, DDPMScheduler, DiffusionPipeline, StableDiffusionPipeline, UNet2DConditionModel
+from diffusers import AutoencoderKL, DDPMScheduler, DiffusionPipeline, UNet2DConditionModel
+from diffusers.loaders import AttnProcsLayers
+from diffusers.models.cross_attention import LoRACrossAttnProcessor
 from diffusers.optimization import get_scheduler
-from diffusers.training_utils import cast_training_params, compute_snr
-from diffusers.utils import (
-    check_min_version,
-    convert_state_dict_to_diffusers,
-    is_wandb_available,
-)
-from diffusers.utils.hub_utils import load_or_create_model_card, populate_model_card
+from diffusers.utils import check_min_version, is_wandb_available
 from diffusers.utils.import_utils import is_xformers_available
-from diffusers.utils.torch_utils import is_compiled_module
-
-if is_wandb_available():
-    import wandb
 
 # Will error if the minimal version of diffusers is not installed. Remove at your own risks.
 check_min_version("0.33.0.dev0")
@@ -955,6 +943,6 @@ def main():
                 ignore_patterns=["step_*", "epoch_*"],
             )
     accelerator.end_training() 
-    
+
 if __name__ == "__main__":
     main() 
