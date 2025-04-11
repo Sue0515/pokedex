@@ -1,0 +1,12 @@
+numpy
+torch
+datasets
+git+https://github.com/huggingface/diffusers
+transformers
+accelerate
+torchvision
+pillow
+matplotlib
+wandb
+safetensors
+git+https://github.com/cloneofsimo/lora.git
