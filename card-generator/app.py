@@ -18,6 +18,9 @@ from custom_templates import(
     create_pokemon_card, CARD_STYLE_TEMPLATES, get_preview_images, get_image_base64
 )
 
+os.environ['STREAMLIT_SERVER_PORT'] = '8501'
+os.environ['STREAMLIT_SERVER_ADDRESS'] = '0.0.0.0'
+
 # Set page config
 st.set_page_config(
     page_title = "Pokémon Card Generator",
